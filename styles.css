@@ -1,0 +1,37 @@
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr;
+  grid-template-rows: 1fr 1fr;
+  margin: auto;
+}
+.card {
+  padding-top: 120%;
+  width: auto;
+  background: purple;
+  margin: 10px;
+  background-size: cover;
+  background-position: center;
+}
+
+.citrus {
+  background-image: url(https://images.pexels.com/photos/1435735/pexels-photo-1435735.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940);
+}
+
+.kiwi {
+  background-image: url(https://images.pexels.com/photos/867349/pexels-photo-867349.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940);
+}
+.orange {
+  background-image: url(https://images.pexels.com/photos/616838/pexels-photo-616838.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940);
+}
+
+.blueberries {
+  background-image: url(https://images.pexels.com/photos/1395958/pexels-photo-1395958.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940);
+}
