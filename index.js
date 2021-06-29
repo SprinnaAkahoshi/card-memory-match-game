@@ -13,6 +13,10 @@ const fruitArray = [
 ];
 
 const randomizer = () => Math.floor(Math.random() * fruitArray.length);
+const resetClicks = () => {
+  firstClick = null;
+  secondClick = null;
+};
 
 for (let i = 0; i < cards.length; i++) {
   const randomNum = randomizer();
@@ -29,16 +33,16 @@ for (let i = 0; i < cards.length; i++) {
       const firstClickClasses = firstClick.classList.value;
       const secondClickClasses = secondClick.classList.value;
       if (firstClickClasses !== secondClickClasses) {
-        firstClick.children[0].classList.remove("hide");
-        secondClick.children[0].classList.remove("hide");
-        firstClick.classList.remove("no-click");
-        secondClick.classList.remove("no-click");
+        setTimeout(() => {
+          firstClick.children[0].classList.remove("hide");
+          secondClick.children[0].classList.remove("hide");
+          firstClick.classList.remove("no-click");
+          secondClick.classList.remove("no-click");
+          resetClicks();
+        }, 1500);
       } else if (firstClickClasses === secondClickClasses) {
-        // firstClick.classList.add("no-click");
-        // secondClick.classList.add("no-click");
+        resetClicks();
       }
-      firstClick = null;
-      secondClick = null;
     }
   };
 }
