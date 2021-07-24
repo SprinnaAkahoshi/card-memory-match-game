@@ -1,6 +1,9 @@
 const cards = document.querySelectorAll("[data-card]");
+const grid = document.querySelector("[data-grid]");
 let firstClick = null;
 let secondClick = null;
+let attempts = 0;
+let score = 0;
 const fruitArray = [
   "citrus",
   "kiwi",
@@ -32,17 +35,23 @@ for (let i = 0; i < cards.length; i++) {
       secondClick = cards[i];
       const firstClickClasses = firstClick.classList.value;
       const secondClickClasses = secondClick.classList.value;
+      attempts += 1;
       if (firstClickClasses !== secondClickClasses) {
+        grid.classList.add("no-click");
         setTimeout(() => {
           firstClick.children[0].classList.remove("hide");
           secondClick.children[0].classList.remove("hide");
           firstClick.classList.remove("no-click");
           secondClick.classList.remove("no-click");
           resetClicks();
-        }, 1500);
+          grid.classList.remove("no-click");
+        }, 1000);
       } else if (firstClickClasses === secondClickClasses) {
+        score += 1;
         resetClicks();
       }
     }
+    console.log(`attempts: ${attempts}`);
+    console.log(`score: ${score}`);
   };
 }
