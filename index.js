@@ -1,57 +1,74 @@
-const cards = document.querySelectorAll("[data-card]");
-const grid = document.querySelector("[data-grid]");
-let firstClick = null;
-let secondClick = null;
-let attempts = 0;
-let score = 0;
-const fruitArray = [
-  "citrus",
-  "kiwi",
-  "orange",
-  "blueberries",
-  "citrus",
-  "kiwi",
-  "orange",
-  "blueberries",
-];
+window.onload = () => {
+  const cards = document.querySelectorAll("[data-card]");
+  const grid = document.querySelector("[data-grid]");
+  const fruitArray = [
+    "citrus",
+    "kiwi",
+    "orange",
+    "blueberries",
+    "citrus",
+    "kiwi",
+    "orange",
+    "blueberries",
+  ];
+  let firstClick = null;
+  let secondClick = null;
+  let attempts = 0;
+  let score = 0;
 
-const randomizer = () => Math.floor(Math.random() * fruitArray.length);
-const resetClicks = () => {
-  firstClick = null;
-  secondClick = null;
-};
+  const randomizer = () => Math.floor(Math.random() * fruitArray.length);
 
-for (let i = 0; i < cards.length; i++) {
-  const randomNum = randomizer();
-  const randomFruit = fruitArray.splice(randomNum, 1)[0];
-  cards[i].classList.add(randomFruit);
-  cards[i].onclick = () => {
-    const cardCover = cards[i].children[0];
-    cardCover.classList.add("hide");
-    cards[i].classList.add("no-click");
-    if (!firstClick && !secondClick) {
-      firstClick = cards[i];
-    } else if (firstClick && !secondClick) {
-      secondClick = cards[i];
-      const firstClickClasses = firstClick.classList.value;
-      const secondClickClasses = secondClick.classList.value;
+  const spliceRandomFruit = (index) => fruitArray.splice(index, 1)[0];
+
+  const resetClicks = () => {
+    firstClick = null;
+    secondClick = null;
+  };
+
+  const firstSecondClickMismatchHandler = () => {
+    grid.classList.add("no-click");
+    setTimeout(() => {
+      firstClick.children[0].classList.remove("hide"); //firstclick.children is cardcover
+      secondClick.children[0].classList.remove("hide");
+      firstClick.classList.remove("no-click");
+      secondClick.classList.remove("no-click");
+      resetClicks();
+      grid.classList.remove("no-click");
+    }, 1000);
+  };
+
+  const clickValidator = (card) => {
+    if (firstClick === null && secondClick === null) {
+      firstClick = card; // first click is randomfruit
+    } else if (firstClick !== null && secondClick === null) {
+      secondClick = card; // if first click is randomfruit and second click is not null, second click is randomfruit
+      const firstClickClasses = firstClick.classList.value; // value of firstClick classes
+      const secondClickClasses = secondClick.classList.value; //value of secondClick classes
       attempts += 1;
       if (firstClickClasses !== secondClickClasses) {
-        grid.classList.add("no-click");
-        setTimeout(() => {
-          firstClick.children[0].classList.remove("hide");
-          secondClick.children[0].classList.remove("hide");
-          firstClick.classList.remove("no-click");
-          secondClick.classList.remove("no-click");
-          resetClicks();
-          grid.classList.remove("no-click");
-        }, 1000);
+        firstSecondClickMismatchHandler();
       } else if (firstClickClasses === secondClickClasses) {
         score += 1;
         resetClicks();
       }
     }
+  };
+
+  const handleClick = (card) => {
+    const cardCover = card.children[0];
+    cardCover.classList.add("hide");
+    card.classList.add("no-click");
+    clickValidator(card);
     console.log(`attempts: ${attempts}`);
     console.log(`score: ${score}`);
   };
-}
+
+  (() => {
+    for (let i = 0; i < cards.length; i++) {
+      const randomNum = randomizer();
+      const randomFruit = spliceRandomFruit(randomNum);
+      cards[i].classList.add(randomFruit); // adds fruit class to card at i
+      cards[i].onclick = () => handleClick(cards[i]);
+    }
+  })();
+};
