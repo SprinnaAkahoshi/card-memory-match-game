@@ -51,3 +51,11 @@ body {
 .no-click {
   pointer-events: none;
 }
+
+#attempts-count {
+  color: red;
+}
+
+#score-keeper {
+  color: blue;
+}

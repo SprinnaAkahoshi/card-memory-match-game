@@ -1,6 +1,8 @@
 window.onload = () => {
   const cards = document.querySelectorAll("[data-card]");
   const grid = document.querySelector("[data-grid]");
+  const attempts = document.querySelector("#attempts-count");
+  const score = document.querySelector("#score-keeper");
   const fruitArray = [
     "citrus",
     "kiwi",
@@ -13,8 +15,8 @@ window.onload = () => {
   ];
   let firstClick = null;
   let secondClick = null;
-  let attempts = 0;
-  let score = 0;
+  let attemptCount = 0;
+  let scoreCount = 0;
 
   const randomizer = () => Math.floor(Math.random() * fruitArray.length);
 
@@ -44,14 +46,19 @@ window.onload = () => {
       secondClick = card; // if first click is randomfruit and second click is not null, second click is randomfruit
       const firstClickClasses = firstClick.classList.value; // value of firstClick classes
       const secondClickClasses = secondClick.classList.value; //value of secondClick classes
-      attempts += 1;
+      attemptCount += 1;
       if (firstClickClasses !== secondClickClasses) {
         firstSecondClickMismatchHandler();
       } else if (firstClickClasses === secondClickClasses) {
-        score += 1;
+        scoreCount += 1;
         resetClicks();
       }
     }
+  };
+
+  const tracker = () => {
+    attempts.innerHTML = attemptCount;
+    score.innerHTML = scoreCount;
   };
 
   const handleClick = (card) => {
@@ -59,8 +66,7 @@ window.onload = () => {
     cardCover.classList.add("hide");
     card.classList.add("no-click");
     clickValidator(card);
-    console.log(`attempts: ${attempts}`);
-    console.log(`score: ${score}`);
+    tracker();
   };
 
   (() => {
