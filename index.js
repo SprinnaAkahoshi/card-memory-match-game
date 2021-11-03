@@ -3,6 +3,7 @@ window.onload = () => {
   const grid = document.querySelector("[data-grid]");
   const attempts = document.querySelector("#attempts-count");
   const score = document.querySelector("#score-keeper");
+  const timer = document.querySelector("#count-down");
   const fruitArray = [
     "citrus",
     "kiwi",
@@ -17,10 +18,16 @@ window.onload = () => {
   let secondClick = null;
   let attemptCount = 0;
   let scoreCount = 0;
+  let countDown = 30;
 
   const randomizer = () => Math.floor(Math.random() * fruitArray.length);
 
   const spliceRandomFruit = (index) => fruitArray.splice(index, 1)[0];
+
+  const countDownTimer = setInterval(() => {
+    countDown -= 1;
+    timer.innerHTML = countDown;
+  }, 1000);
 
   const resetClicks = () => {
     firstClick = null;
