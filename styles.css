@@ -59,3 +59,16 @@ body {
 #score-keeper {
   color: blue;
 }
+
+#wario-modal {
+  background-color: #fdd50b;
+  background-image: url(./assets/wario.png);
+  background-size: contain;
+  background-position: center;
+  background-repeat: no-repeat;
+  height: 100%;
+  width: 100%;
+  position: fixed;
+  top: 0;
+  left: 0;
+}
