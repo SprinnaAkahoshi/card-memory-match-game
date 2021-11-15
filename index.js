@@ -4,6 +4,7 @@ window.onload = () => {
   const attempts = document.querySelector("#attempts-count");
   const score = document.querySelector("#score-keeper");
   const timer = document.querySelector("#count-down");
+  const wario = document.querySelector("#wario-modal");
   const fruitArray = [
     "citrus",
     "kiwi",
@@ -18,15 +19,27 @@ window.onload = () => {
   let secondClick = null;
   let attemptCount = 0;
   let scoreCount = 0;
-  let countDown = 30;
+  let countDown = 5;
 
   const randomizer = () => Math.floor(Math.random() * fruitArray.length);
 
   const spliceRandomFruit = (index) => fruitArray.splice(index, 1)[0];
 
+  const updateCountdownText = () => {
+    timer.innerHTML = countDown;
+  };
+
+  const endGame = () => {
+    wario.classList.remove("hide");
+  };
+
   const countDownTimer = setInterval(() => {
     countDown -= 1;
-    timer.innerHTML = countDown;
+    updateCountdownText();
+    if (countDown === 0) {
+      clearInterval(countDownTimer);
+      endGame();
+    }
   }, 1000);
 
   const resetClicks = () => {
