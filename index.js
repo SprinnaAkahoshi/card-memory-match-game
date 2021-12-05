@@ -5,6 +5,7 @@ window.onload = () => {
   const score = document.querySelector("#score-keeper");
   const timer = document.querySelector("#count-down");
   const wario = document.querySelector("#wario-modal");
+  const trophyWin = document.querySelector("#trophy-modal");
   const fruitArray = [
     "citrus",
     "kiwi",
@@ -19,7 +20,8 @@ window.onload = () => {
   let secondClick = null;
   let attemptCount = 0;
   let scoreCount = 0;
-  let countDown = 5;
+  let countDown = 25;
+  let winner = false;
 
   const randomizer = () => Math.floor(Math.random() * fruitArray.length);
 
@@ -33,13 +35,23 @@ window.onload = () => {
     wario.classList.remove("hide");
   };
 
+  const winGame = () => {
+    if (scoreCount === 100) {
+      winner = true;
+      trophyWin.classList.add("trophy");
+    }
+  }
+
   const countDownTimer = setInterval(() => {
     countDown -= 1;
     updateCountdownText();
-    if (countDown === 0) {
+    if (countDown === 0 && winner === false) {
       clearInterval(countDownTimer);
       endGame();
     }
+    if (winner) {
+      clearInterval(countDownTimer);
+      }
   }, 1000);
 
   const resetClicks = () => {
@@ -70,7 +82,8 @@ window.onload = () => {
       if (firstClickClasses !== secondClickClasses) {
         firstSecondClickMismatchHandler();
       } else if (firstClickClasses === secondClickClasses) {
-        scoreCount += 1;
+        scoreCount += 25;
+        winGame();
         resetClicks();
       }
     }
